@@ -1,24 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Login from "./Login";
+import Header from "./Header";
+import Footer from "./Footer";
+import Profile from "./Profile";
+import ProfileSettings from "./ProfileSettings";
+
 
 function App() {
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setUser(user));
+      }
+    });
+  }, []);
+
+  function handleLogout() {
+    setUser("");
+  }
+
+  function updateUser(newName, newBio, newTheme, newUsername) {
+    setUser({ ...user, username: newUsername, name: newName, bio: newBio, theme: newTheme });
+  }
+
+  if (!user)
+  return (
+    <div>
+      <div>
+        <Header user={user} onLogout={handleLogout} />
+        <Login onLogin={setUser} />
+      </div>
+      <Footer></Footer>
+    </div>
+  );
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Header user={user} onLogout={handleLogout} />
+      <Routes>
+        <Route exact path="/login" element={<Login />} />
+        <Route
+          exact
+          path="/profile"
+          element={
+            <Profile
+              user={user}
+            />
+          }
+        />
+        <Route exact path="/settings" 
+          element={
+          <ProfileSettings 
+          user={user} handleLogout={handleLogout}
+          updateUser={updateUser} />}/>
+      </Routes>
+      <Footer></Footer>
+      </div>
   );
 }
 
