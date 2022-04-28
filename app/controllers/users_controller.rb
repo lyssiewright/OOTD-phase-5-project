@@ -40,6 +40,34 @@ class UsersController < ApplicationController
       session.delete :user_id
       head :no_content
     end
+
+
+    # def follow
+    #   @user = User.find(params[:id])
+    #   current_user.followees << @user
+    #   redirect_back(fallback_location: user_path(@user))
+    # end
+    
+    # def unfollow
+    #   @user = User.find(params[:id])
+    #   current_user.followed_users.find_by(followee_id: @user.id).destroy
+    #   redirect_back(fallback_location: user_path(@user))
+    # end
+    def follow
+      @user = User.find(params[:id])
+      @current_user=User.find_by(id: session[:user_id])
+      @current_user.followees << @user
+      @current_user.save
+      # redirect_back(fallback_location:”/”)
+      end
+
+    def unfollow
+      @user = User.find(params[:id])
+      @current_user=User.find_by(id: session[:user_id])
+      @current_user.followees.delete(@user)
+      @current_user.save
+      # redirect_back(fallback_location:”/”)
+      end
   
     private
   

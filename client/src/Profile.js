@@ -6,7 +6,6 @@ import Outfit from "./Outfit";
 
 function Profile({ user }) {
 
-    // const [files, setFiles] = useState([])
     const [topName, setTopName] = useState('')
     const [bottomName, setBottomName] = useState('')
     const [bottomImg, setBottomImg] = useState(null)
@@ -19,30 +18,28 @@ function Profile({ user }) {
         .then(data => setOutfits(data))
     }, [])
 
-    function handleImageSubmit(e){
+    function handleSubmit(e){
         e.preventDefault()
         const formData = new FormData();
         formData.append('top', topName)
         formData.append('bottom', bottomName)
         formData.append('top_img', topImg)
         formData.append('bottom_img', bottomImg)
-        // for (let i = 0; i < files.length; i++){
-        //     formData.append('images[]', files[i])
-        // }
-
-
+        formData.append('user_id', user.id)
+        console.log(formData)
         fetch('/outfits', {
             method: 'POST',
             body: formData
         })
     }
 
-    const mappedOutfits = outfits.map((outfit)=>  
+ 
+
+
+        const mappedOutfits = outfits.map((outfit)=>  
         <Outfit key={outfit.id} outfit={outfit} />
         
     ) 
-
-    
     
 
   return (
@@ -56,7 +53,7 @@ function Profile({ user }) {
         <h1>{user.name}'s Closet</h1>
         <p>{user.bio}</p>
     
-      <form onSubmit={handleImageSubmit}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="topName">Name of the top</label>
         <input type="text" id="topName" value={topName} onChange={(e) => setTopName(e.target.value)}/>
         <input

@@ -5,6 +5,7 @@ class CreateOutfits < ActiveRecord::Migration[6.1]
       t.string :bottom
       t.string :top_img
       t.string :bottom_img
+      t.integer :user_id
 
       t.timestamps
     end

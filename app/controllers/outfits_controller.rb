@@ -11,8 +11,10 @@ class OutfitsController < ApplicationController
   end
 
   def index
-    render json: Outfit.all
-  end
+    current_user = User.find(session[:user_id])
+    outfits = Outfit.select{|outfit| outfit.user.id == current_user.id}
+    render json: outfits
+end
 
   def show
   end
@@ -21,7 +23,7 @@ class OutfitsController < ApplicationController
 
   private
     def outfit_params
-      params.permit(:top, :top_img, :bottom, :bottom_img)
+      params.permit(:top, :top_img, :bottom, :bottom_img, :user_id)
     end
 
     def render_unprocessable_entity invalid
