@@ -9,6 +9,14 @@ import ProfileSettings from "./ProfileSettings";
 
 function App() {
   const [user, setUser] = useState("");
+  const [outfits, setOutfits] = useState([])
+
+  useEffect(() => {
+    fetch('/outfits')
+    .then(res => res.json())
+    .then(data => setOutfits(data))
+}, [])
+
 
   useEffect(() => {
     fetch("/me").then((r) => {
@@ -47,7 +55,7 @@ function App() {
           path="/profile"
           element={
             <Profile
-              user={user}
+              user={user} outfits={outfits}
             />
           }
         />

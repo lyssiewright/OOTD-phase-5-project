@@ -23,7 +23,7 @@ end
 
   private
     def outfit_params
-      params.permit(:top, :top_img, :bottom, :bottom_img, :user_id)
+      params.permit(:outfit, :top_img, :bottom_img, :user_id)
     end
 
     def render_unprocessable_entity invalid

@@ -51,8 +51,7 @@ ActiveRecord::Schema.define(version: 2022_04_28_001939) do
   end
 
   create_table "outfits", force: :cascade do |t|
-    t.string "top"
-    t.string "bottom"
+    t.string "outfit"
     t.string "top_img"
     t.string "bottom_img"
     t.integer "user_id"

@@ -1,7 +1,7 @@
 class OutfitSerializer < ActiveModel::Serializer
   
 include Rails.application.routes.url_helpers
-  attributes :id, :top, :top_img, :bottom, :bottom_img
+  attributes :id, :outfit, :top_img, :bottom_img
   belongs_to :user
 
 
