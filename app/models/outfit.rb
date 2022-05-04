@@ -4,4 +4,8 @@ class Outfit < ApplicationRecord
     belongs_to :user
     has_one_attached :top_img
     has_one_attached :bottom_img
+
+
+
 end
+

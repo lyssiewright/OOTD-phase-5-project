@@ -10,8 +10,16 @@ function Outfit({outfit}) {
   return (
     <div>
         <h3>{outfit.outfit}</h3>
-       <img src={outfit.top_img}/>
-       <img src={outfit.bottom_img}/>
+       <img style={{
+           height: 300,
+           width: "auto",
+       }}
+           src={outfit.top_img}/>
+       <img style={{
+            height: 300,
+            width: "auto",
+       }}
+            src={outfit.bottom_img}/>
     </div>
   );
 }

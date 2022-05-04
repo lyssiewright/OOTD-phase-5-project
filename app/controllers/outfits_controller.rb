@@ -17,6 +17,9 @@ class OutfitsController < ApplicationController
 end
 
   def show
+    friend = User.find_by(id: params[:id])
+    outfits = Outfit.select{|outfit| outfit.user.id == friend.id}
+    render json: outfits
   end
 
 

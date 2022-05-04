@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
-  post '/users/:id/follow', to: "users#follow", as: "follow_user"
-  post '/users/:id/unfollow', to: "users#unfollow", as: "unfollow_user"
+  # post '/users/:id/follow', to: "users#follow", as: "follow_user"
+  # post '/users/:id/unfollow', to: "users#unfollow", as: "unfollow_user"
   get '/likes', to: 'likes#index'
   post '/likes', to: 'likes#create'
   post '/outfits', to: 'outfits#create'
@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   patch '/me', to: 'users#update'
   delete '/users', to: 'users#destroy'
   get '/follows', to: 'follows#index'
+  get '/follows/:id', to: 'follows#show'
+  get '/users/search', to: 'users#search'
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!

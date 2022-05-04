@@ -39,8 +39,14 @@ function Header({ user, onLogout }) {
           <Link to={"profile"} style={{ display: "block", margin: "auto" }}>
             Profile
           </Link>
+          <Link to={"friends"} style={{ display: "block", margin: "auto" }}>
+            Friends
+          </Link>
           <Link to={"settings"} style={{ display: "block", margin: "auto" }}>
             Profile Settings
+          </Link>
+          <Link to={"search"} style={{ display: "block", margin: "auto" }}>
+            Search Users
           </Link>
 
           <p

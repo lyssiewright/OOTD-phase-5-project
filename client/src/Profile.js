@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import SelectTheme from "./SelectTheme";
 import Outfit from "./Outfit";
-
+import Friends from "./Friends";
 
 function Profile({ user, outfits }) {
     const [outfitName, setOutfitName] = useState('')
     const [bottomImg, setBottomImg] = useState(null)
     const [topImg, setTopImg] = useState(null)
     const [newTop, setNewTop] = useState('')
-    const [newBottom, setnewBottom] = useState('')
-
-
+    const [newBottom, setNewBottom] = useState('')
+    const [shuffleOutfitName, setShuffleOutfitName] = useState('')
+    const [followers, setFollowers] = useState(user.followers)
+    const [followees, setFollowees] = useState(user.followees)
 
     function handleSubmit(e){
         e.preventDefault()
@@ -26,27 +25,30 @@ function Profile({ user, outfits }) {
         })
         
     }
-    
-    // function handleNewSubmit(e){
-    //     e.preventDefault()
-    //     const formData = new FormData();
-    //     formData.append('outfit', shuffledOutfitName)
-    //     formData.append('top_img', newTop)
-    //     formData.append('bottom_img', newBottom)
-    //     formData.append('user_id', user.id)
-    //     fetch('/outfits', {
-    //         method: 'POST',
-    //         body: formData
-    //     })
+
+    function handleShuffleSubmit(e){
+        e.preventDefault()
+        const formData = new FormData();
+        formData.append('outfit', shuffleOutfitName)
+        formData.append('top_img', newTop)
+        formData.append('bottom_img', newBottom)
+        formData.append('user_id', user.id)
+        fetch('/outfits', {
+            method: 'POST',
+            body: formData
+        })
+        console.log(formData)
         
-    // }
+    }
     
 
-        const mappedOutfits = outfits.map((outfit)=> 
-        <Outfit key={outfit.id} outfit={outfit}/>
-        
-    )
+        const mappedOutfits = outfits.map((outfit)=> (
+        <Outfit key={outfit.id} outfit={outfit}/>))
 
+        // const mappedFollowers = followers.map(follower => {
+        // <Friends key={follower.id} follower={follower}/>})
+        // const mappedFollowees = followees.map(followee => <ul>{followee.username}</ul>)
+            
 
         function shuffleTop(){
         let currentIndex = outfits.length, temporaryValue, randomIndex;
@@ -59,6 +61,7 @@ function Profile({ user, outfits }) {
         }
         setNewTop(outfits[0].top_img);
       }
+      
 
       function shuffleBottom(){
         let currentIndex = outfits.length, temporaryValue, randomIndex;
@@ -69,12 +72,12 @@ function Profile({ user, outfits }) {
           outfits[currentIndex] = outfits[randomIndex];
           outfits[randomIndex] = temporaryValue;
         }
-        setnewBottom(outfits[0].bottom_img);
+        setNewBottom(outfits[0].bottom_img);
       }
-      
-        
 
-  return (
+      
+
+  return ( 
     <div style={{
         backgroundImage: `url(${user.theme})`, 
         backgroundPosition: 'center',
@@ -84,6 +87,8 @@ function Profile({ user, outfits }) {
       }}>
         <h1>{user.name}'s Closet</h1>
         <p>{user.bio}</p>
+        <h3>Followers: {followers.length == 0 ? "No Followers" : followers.length}</h3>
+        <h3>Following: {followees.length == 0 ? "Not Following any users" : followees.length}</h3>
       <form onSubmit={handleSubmit}>
         <label htmlFor="outfitName">Outfit Name</label>
         <input type="text" id="outfitName" value={outfitName} onChange={(e) => setOutfitName(e.target.value)}/>
@@ -97,15 +102,29 @@ function Profile({ user, outfits }) {
 
         <input type='submit'/>
       </form>
+      <div>
       <button onClick={shuffleTop}>Shuffle Top</button>
       <button onClick={shuffleBottom}>Shuffle Bottom</button>
-      <div>
-        <img src={newTop}/>
-        <img src={newBottom}/>
- 
       </div>
-      <div>
-          {/* {mappedOutfits} */}
+      <form onSubmit={handleShuffleSubmit}>
+        <label htmlFor="outfitName">Outfit Name</label>
+        <input type="text" id="outfitName" value={shuffleOutfitName} onChange={(e) => setShuffleOutfitName(e.target.value)}/>
+        <img style={{
+           height: 300,
+           width: "auto",
+       }} src={newTop}/>
+        <img style={{
+           height: 300,
+           width: "auto",
+       }} src={newBottom}/>
+        <label htmlFor="shuffleTop">Shuffled Top</label>
+        <input type="text" id="shuffledTop" value={newTop} onChange={(e) => setNewTop(e.target.files[0])}/>
+        <label htmlFor="shuffleBottom">Shuffled Bottom</label>
+        <input type="text" id="shuffledBottom" value={newBottom} onChange={(e) => setNewBottom(e.target.files[0])}/>
+        <input type='submit'/>
+      </form>
+      <div> 
+          {mappedOutfits}
       </div>
     </div>
   );

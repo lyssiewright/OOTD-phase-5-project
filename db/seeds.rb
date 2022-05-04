@@ -16,9 +16,15 @@ end
 
 User.create(name: "lyssie Wright", username: "lyssiewright", password: "12345678", bio: "I love fashion")
 
+
+User.create(name: "taylor richerson", username: "tayrenee", password: "12345678", bio: "Blah Blah")
+
 puts "🌱 Seeding followers..."
 6.times do
     Follow.create(follower_id: User.ids.sample, followee_id: User.ids.sample)
 end
+
+Follow.create(follower_id: 10, followee_id: 9)
+Follow.create(follower_id: 9, followee_id: 10)
 
 puts "✅ Done seeding!"
