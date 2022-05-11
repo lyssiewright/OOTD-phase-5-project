@@ -34,8 +34,6 @@ function LoginForm({ onLogin }) {
       style={{
         display: "flex",
         flexDirection: "column",
-        width: "33%",
-        margin: "auto",
       }}
     >
       <label htmlFor="username">Username</label>
@@ -48,19 +46,19 @@ function LoginForm({ onLogin }) {
       />
       <label htmlFor="password">Password</label>
       <input
-        type="password"
+        type="text"
         id="password"
         autoComplete="current-password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button variant="fill" type="submit" style={{ marginTop: 10 }}>
+      <button variant="fill" type="submit" style={{ marginTop: 10, background: "none", border: "none", fontFamily: 'Russo One', color: "pink"}}>
         {isLoading ? "Loading..." : "Login"}
       </button>
       {errors.map((err) => (
         <h3
           key={err}
-          style={{ display: "block", margin: "auto", marginTop: 10 }}
+          style={{ display: "block", margin: "auto", marginTop: 10, background: "none", border: "none", fontFamily: 'Russo One', color: "pink" }}
         >
           {err}
         </h3>

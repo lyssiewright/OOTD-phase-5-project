@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useResolvedPath } from "react-router-dom";
 import Login from "./Login";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -8,17 +8,30 @@ import ProfileSettings from "./ProfileSettings";
 import Friends from "./Friends";
 import FriendProfile from "./FriendProfile";
 import Search from "./Search";
+import ReactPlayer from "react-player";
+import backgroundVideo from "./resources/ezgif-5-76bcba548c.mp4";
+import NewOutfitForm from "./NewOutfitForm";
 
 
 function App() {
   const [user, setUser] = useState("");
-  const [outfits, setOutfits] = useState([])
+  const [users, setUsers] = useState([])
+  // const [outfits, setOutfits] = useState([])
   const [follows, setFollows] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filteredName, setFilteredName] = useState('')
+  const [friend, setFriend] = useState({})
 
-  useEffect(() => {
-    fetch('/outfits')
-    .then(res => res.json())
-    .then(data => setOutfits(data))
+//   useEffect(() => {
+//     fetch('/outfits')
+//     .then(res => res.json())
+//     .then(data => setOutfits(data))
+// }, [])
+
+useEffect(() => {
+  fetch('/users')
+  .then(res => res.json())
+  .then(data => setUsers(data))
 }, [])
 
 useEffect(() => {
@@ -35,6 +48,16 @@ useEffect(() => {
     });
   }, []);
 
+  function handleSearch(newSearchQuery){
+    setSearchQuery(newSearchQuery)
+    users.map((user)=> {
+      if (user.name.includes(searchQuery)){
+        setFilteredName(user.name)
+        setFriend(user)
+      }
+    })
+  }
+
   function handleLogout() {
     setUser("");
   }
@@ -45,17 +68,19 @@ useEffect(() => {
 
   if (!user)
   return (
-    <div>
-      <div>
+      <div className="video-wrapper">
+      <ReactPlayer className="my-video" url={backgroundVideo} playing loop muted width="100%" height="100%"/>
+      <div className="header-login">
         <Header user={user} onLogout={handleLogout} />
         <Login onLogin={setUser} />
       </div>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </div>
   );
 
   return (
     <div className="App">
+
       <Header user={user} onLogout={handleLogout} />
       <Routes>
         <Route exact path="/login" element={<Login />} />
@@ -64,10 +89,10 @@ useEffect(() => {
           path="/profile"
           element={
             <Profile
-              user={user} outfits={outfits}
-            />
-          }
+              user={user} />}
+              // outfits={outfits}/>}
         />
+        <Route exact path = "/new-outfit-form" element={<NewOutfitForm user={user}/>}/>
         <Route exact path="/settings" 
           element={
           <ProfileSettings 
@@ -78,10 +103,10 @@ useEffect(() => {
           <Friends user={user}/>}/>
         <Route exact path="friend/:id" 
           element={
-          <FriendProfile user={user} follows={follows} outfits={outfits}/>}/>
+          <FriendProfile/>}/>
         <Route exact path="/search" 
           element={
-          <Search/>}/>
+          <Search filteredName={filteredName} follows={follows} user ={user} friend={friend} handleSearch={handleSearch}/>}/>
       </Routes>
       <Footer></Footer>
       </div>

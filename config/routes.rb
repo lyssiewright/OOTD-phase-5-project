@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   delete '/users', to: 'users#destroy'
   get '/follows', to: 'follows#index'
   get '/follows/:id', to: 'follows#show'
-  get '/users/search', to: 'users#search'
+  post '/follows', to: 'follows#create'
+  delete '/follows/:id', to: 'follows#destroy'
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
