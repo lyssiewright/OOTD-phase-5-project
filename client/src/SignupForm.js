@@ -88,7 +88,7 @@ function SignUpForm({ onLogin, user }) {
           onChange={(e) => setBio(e.target.value)}
           autoComplete="off"
         />
-        <label htmlFor="theme">Select your closet</label>
+        {/* <label htmlFor="theme">Select your closet</label>
         <select
           type="text"
           id="theme"
@@ -97,7 +97,7 @@ function SignUpForm({ onLogin, user }) {
           autoComplete="off"
         >
           <SelectTheme />
-        </select>
+        </select> */}
         <button type="submit" style={{ 
           marginTop: 20, 
           background: "none", 

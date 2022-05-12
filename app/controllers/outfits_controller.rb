@@ -24,9 +24,9 @@ end
   end
 
   def destroy
-    user = User.find(session[:user_id])
+    current_user = User.find(session[:user_id])
     outfit = Outfit.find_by(id: params[:id])
-    if outfit.user.id === user.id
+    if outfit.user.id === current_user.id
     outfit.destroy
     head :no_content
     else render json: { errors: ["You cannot remove friends' outfits"] }, status: :unauthorized

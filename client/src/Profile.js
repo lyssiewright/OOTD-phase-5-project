@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Outfit from "./Outfit";
 
 
-function Profile({onDeleteOutfit}) {
+function Profile() {
     const [newTop, setNewTop] = useState('')
     const [newBottom, setNewBottom] = useState('')
     const [outfits, setOutfits] = useState([])
@@ -16,6 +16,7 @@ function Profile({onDeleteOutfit}) {
         });
       }, []);
 
+
     useEffect(() => {
         fetch('/outfits')
         .then(res => res.json())
@@ -24,13 +25,19 @@ function Profile({onDeleteOutfit}) {
 
 
 
-        const mappedOutfits = outfits.map((outfit)=> (
-        <Outfit key={outfit.id} outfit={outfit} onDeleteOutfit={onDeleteOutfit}/>))
+    
 
-        function onDeleteOutfit(deletedOutfit){
-            const updatedOutfits = outfits.filter((outfit)=>outfit.id !== deletedOutfit)
-            setOutfits(updatedOutfits)
-        }
+    
+
+
+
+        const mappedOutfits = outfits.map((outfit)=> (
+        <Outfit key={outfit.id} outfit={outfit} />))
+// onDelete
+        // function onDeleteOutfit(deletedOutfit){
+        //     const updatedOutfits = mappedOutfits.filter((outfit)=>outfit.id !== deletedOutfit)
+        //     setOutfits(updatedOutfits)
+        // }
             
 
         function shuffleTop(e){
@@ -87,13 +94,14 @@ function Profile({onDeleteOutfit}) {
         </div>
       <div className="profile-info-side">
         <h2 style={{fontSize: 30, textShadow: "-1px 2px 0 coral", color:"white"}}>My Profile Info</h2>
-        <p style={{fontStyle: "italic"}}>Bio: {user.bio}</p>
+        <p style={{fontStyle: "italic", color: "white", backgroundColor: "pink", lineHeight: 1, display: "inline-flex", alignContent: "center", width: "95%"}}>Bio: {user.bio}</p>
         <span style={{
             textShadow: "-1px 2px 0 coral", 
             color:"white",
             fontSize: 12,
-            display: "block"}}>
-        <h3>Followers: {user.followers.length ? user.followers.length : "No Followers  "  }</h3>
+            display: "inline-flex"
+            }}>
+        <h3 style={{marginInline: 10 }}>Followers: {user.followers.length ? user.followers.length : "No Followers  "  }</h3>
         <h3>Following: {user.followees.length ? user.followees.length : "Not Following any users  "}</h3>
         </span>
         <br></br>
@@ -106,7 +114,7 @@ function Profile({onDeleteOutfit}) {
             }}>
         <h3>Random OOTD?</h3>
         <h3> 🔀 Mix it up ↓</h3>
-        <button style={{ background: "pink", border: "none", fontFamily: 'Russo One', color: "white"}} onClick={(e)=>shuffleTop(e)}>Shuffle Top</button>
+        <button style={{ marginInline: 10, background: "pink", border: "none", fontFamily: 'Russo One', color: "white"}} onClick={(e)=>shuffleTop(e)}>Shuffle Top</button>
         <button style={{ background: "pink", border: "none", fontFamily: 'Russo One', color: "white"}}onClick={(e)=>shuffleBottom(e)}>Shuffle Bottom</button>
         
         {/* <form className="shuffle-form" onSubmit={handleShuffleSubmit}> */}
@@ -115,6 +123,8 @@ function Profile({onDeleteOutfit}) {
         <img style={{
            height: 250,
            width: "auto",
+           marginTop: 10,
+           marginBottom: 10
        }} src={newTop}/>
         <img style={{
            height: 250,

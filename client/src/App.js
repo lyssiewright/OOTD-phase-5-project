@@ -64,7 +64,6 @@ useEffect(() => {
 
   function updateOutfits(updatedOutfit) {
     const filtered = [...outfits].filter((outfit) => outfit.id !== updatedOutfit.id);
-    // const sorted = [...filtered, updatedOutfit].sort((a, b) => a.id - b.id);
     setOutfits(filtered);
 }
 
