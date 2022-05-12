@@ -1,44 +1,40 @@
 import React, { useEffect, useState } from "react";
 import Outfit from "./Outfit";
-import Friends from "./Friends";
-import Header from "./Header";
-import {useLocation} from "react-router-dom"
 
-function Profile({ user }) {
+
+function Profile({onDeleteOutfit}) {
     const [newTop, setNewTop] = useState('')
     const [newBottom, setNewBottom] = useState('')
-    const [shuffleOutfitName, setShuffleOutfitName] = useState('')
-    const [followers, setFollowers] = useState(user.followers)
-    const [followees, setFollowees] = useState(user.followees)
     const [outfits, setOutfits] = useState([])
+    const [user, setUser] = useState("");
 
-
-    // function handleShuffleSubmit(e){
-    //     e.preventDefault()
-    //     const formData = new FormData();
-    //     formData.append('outfit', shuffleOutfitName)
-    //     formData.append('top_img', newTop)
-    //     formData.append('bottom_img', newBottom)
-    //     formData.append('user_id', user.id)
-    //     fetch('/outfits', {
-    //         method: 'POST',
-    //         body: formData
-    //     })
-        
-    // }
+    useEffect(() => {
+        fetch("/me").then((r) => {
+          if (r.ok) {
+            r.json().then((user) => setUser(user));
+          }
+        });
+      }, []);
 
     useEffect(() => {
         fetch('/outfits')
         .then(res => res.json())
         .then(data => setOutfits(data))
     }, [])
-    
+
+
 
         const mappedOutfits = outfits.map((outfit)=> (
-        <Outfit key={outfit.id} outfit={outfit}/>))
+        <Outfit key={outfit.id} outfit={outfit} onDeleteOutfit={onDeleteOutfit}/>))
+
+        function onDeleteOutfit(deletedOutfit){
+            const updatedOutfits = outfits.filter((outfit)=>outfit.id !== deletedOutfit)
+            setOutfits(updatedOutfits)
+        }
             
 
-        function shuffleTop(){
+        function shuffleTop(e){
+        e.stopPropagation();
         let currentIndex = outfits.length, temporaryValue, randomIndex;
         while (0 !== currentIndex) {
           randomIndex = Math.floor(Math.random() * currentIndex);
@@ -51,7 +47,8 @@ function Profile({ user }) {
       }
       
 
-      function shuffleBottom(){
+      function shuffleBottom(e){
+        e.stopPropagation();
         let currentIndex = outfits.length, temporaryValue, randomIndex;
         while (0 !== currentIndex) {
           randomIndex = Math.floor(Math.random() * currentIndex);
@@ -63,14 +60,14 @@ function Profile({ user }) {
         setNewBottom(outfits[0].bottom_img);
       }
 
-      
 
+    if (user.followees && user.followers){
   return ( 
     <div style={{
         position: "relative",
         textAlign: "center",
         display: "flex",
-        width: "85%",
+        width: "90%",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
@@ -96,8 +93,8 @@ function Profile({ user }) {
             color:"white",
             fontSize: 12,
             display: "block"}}>
-        <h3>Followers: {followers.length == 0 ? "No Followers  " : followers.length}</h3>
-        <h3>Following: {followees.length == 0 ? "Not Following any users  " : followees.length}</h3>
+        <h3>Followers: {user.followers.length ? user.followers.length : "No Followers  "  }</h3>
+        <h3>Following: {user.followees.length ? user.followees.length : "Not Following any users  "}</h3>
         </span>
         <br></br>
         <div style={{
@@ -109,8 +106,8 @@ function Profile({ user }) {
             }}>
         <h3>Random OOTD?</h3>
         <h3> 🔀 Mix it up ↓</h3>
-        <button style={{ background: "pink", border: "none", fontFamily: 'Russo One', color: "white"}} onClick={shuffleTop}>Shuffle Top</button>
-        <button style={{ background: "pink", border: "none", fontFamily: 'Russo One', color: "white"}}onClick={shuffleBottom}>Shuffle Bottom</button>
+        <button style={{ background: "pink", border: "none", fontFamily: 'Russo One', color: "white"}} onClick={(e)=>shuffleTop(e)}>Shuffle Top</button>
+        <button style={{ background: "pink", border: "none", fontFamily: 'Russo One', color: "white"}}onClick={(e)=>shuffleBottom(e)}>Shuffle Bottom</button>
         
         {/* <form className="shuffle-form" onSubmit={handleShuffleSubmit}> */}
         {/* <label htmlFor="outfitName">Outfit Name</label> */}
@@ -135,7 +132,13 @@ function Profile({ user }) {
           {mappedOutfits}
       </div>
     </div>
-  );
+  );}
+  else {
+    return(
+    <div>
+      <h1>Loading...</h1>
+     </div>
+    )}
 }
 
 export default Profile;

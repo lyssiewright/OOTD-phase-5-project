@@ -48,13 +48,14 @@ function SignUpForm({ onLogin, user }) {
         style={{
           display: "flex",
           flexDirection: "column",
-          width: "33%",
+          width: "60%",
           margin: "auto",
+          lineHeight: 2
         }}
       >
         <label htmlFor="name">Name</label>
         <input
-          type="name"
+          type="text"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -81,15 +82,15 @@ function SignUpForm({ onLogin, user }) {
         style={{
             height: 60
         }}
-          type="bio"
+          type="text"
           id="bio"
           value={bio}
           onChange={(e) => setBio(e.target.value)}
           autoComplete="off"
         />
-        <label htmlFor="theme">Select profile theme</label>
+        <label htmlFor="theme">Select your closet</label>
         <select
-          type="theme"
+          type="text"
           id="theme"
           value={theme}
           onChange={(e) => setTheme(e.target.value)}
@@ -97,8 +98,15 @@ function SignUpForm({ onLogin, user }) {
         >
           <SelectTheme />
         </select>
-        <button type="submit" style={{ marginTop: 10 }}>
-          {isLoading ? "Loading..." : "Sign Up"}
+        <button type="submit" style={{ 
+          marginTop: 20, 
+          background: "none", 
+          border: "none", 
+          fontFamily: 'Russo One', 
+          color: "pink",
+          fontSize: 24
+          }}>
+          {isLoading ? "Loading..." : "Sign Up!!"}
         </button>
         {errors.map((err) => (
           <h3

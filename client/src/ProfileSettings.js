@@ -6,11 +6,12 @@ import SelectTheme from "./SelectTheme";
 function ProfileSettings({ user, handleLogout, updateUser }) {
   const [username, setUsername] = useState(user.username);
   const [bio, setBio] = useState(user.bio);
-  const [theme, setTheme] = useState(user.theme)
+  // const [theme, setTheme] = useState(user.theme)
   const [justToBeSure, setJustToBeSure] = useState(false);
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
-  console.log(user.theme)
+  console.log(user)
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,12 +23,12 @@ function ProfileSettings({ user, handleLogout, updateUser }) {
       body: JSON.stringify({
         username: username,
         bio: bio,
-        theme: theme
+        // theme: theme
       }),
     }).then((r) => {
       if (r.ok) {
         r.json().then(() => {
-          updateUser(username, bio, theme);
+          updateUser(username, bio);
           setErrors(["User was updated successfully"]);
           setTimeout(() => setErrors([]), 1500);
         });
@@ -53,14 +54,16 @@ function ProfileSettings({ user, handleLogout, updateUser }) {
   return justToBeSure ? (
     <div
       style={{
-        border: "1px solid red",
-        backgroundColor: "transparent",
+        border: "1px solid pink",
+        backgroundColor: "white",
         width: "fit-content",
         display: "block",
         margin: "auto",
+        boxShadow: "0.7em 1em 3em 0 pink", 
+        marginTop: 60
       }}
     >
-      <h1 style={{ margin: 20 }}>Are you sure you want to delete this user?</h1>
+      <h1 style={{ margin: 20 }}>Delete your account?!</h1>
       <div
         style={{
           display: "flex",
@@ -69,59 +72,66 @@ function ProfileSettings({ user, handleLogout, updateUser }) {
       >
         <button
           style={{
+            background: "pink",
+            border: "none", 
+            fontFamily: 'Russo One', 
+            color: "white",
             display: "block",
             margin: "auto",
             marginBottom: 20,
-            backgroundColor: "transparent",
-            borderColor: "red",
             width: "fit-content",
             height: "fit-content",
-            fontSize: 36,
+            fontSize: 24,
           }}
           onClick={() => setJustToBeSure(false)}
         >
-          Cancel
+          As if!
         </button>
         <button
           style={{
+            background: "coral",
+            border: "none", 
+            fontFamily: 'Russo One', 
+            color: "white",
             display: "block",
             margin: "auto",
             marginBottom: 20,
-            backgroundColor: "transparent",
-            color: "red",
-            borderColor: "red",
             width: "fit-content",
             height: "fit-content",
-            fontSize: 36,
+            fontSize: 24,
+
           }}
           onClick={deleteUser}
         >
-          Delete
+          Totally
         </button>
       </div>
     </div>
   ) : (
-    <div style={{
-        backgroundImage: `url(${theme})`, 
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        height: 700
-        }}>
+    // <div className="filtered" style={{
+    //       backgroundImage: `url(${theme})`, 
+    //       backgroundPosition: 'center',
+    //       backgroundSize: "cover",
+    //       backgroundRepeat: 'no-repeat',
+    //       height: 700,
       <div>
-      </div>
-      <form
+      <form className="settings-form"
         onSubmit={handleSubmit}
         style={{
           display: "flex",
           flexDirection: "column",
           width: "33%",
           margin: "auto",
+          border: "1px solid pink",
+          backgroundColor: "white",
+          padding: 15,
+          boxShadow: "0.7em 1em 3em 0 pink", 
+          lineHeight: 2,
         }}
       >
         <label htmlFor="username">Change Username</label>
         <input
-          type="username"
+          type="text"
           id="username"
           autoComplete="off"
           value={username}
@@ -129,13 +139,13 @@ function ProfileSettings({ user, handleLogout, updateUser }) {
         />
         <label htmlFor="bio">Change Bio</label>
         <input style={{height: 60}}
-          type="bio"
+          type="text"
           id="bio"
           value={bio}
           onChange={(e) => setBio(e.target.value)}
           autoComplete="off"
         />
-        <label htmlFor="theme">Change Theme</label>
+        {/* <label htmlFor="theme">Change Color Scheme</label>
         <select
           type="theme"
           id="theme"
@@ -143,8 +153,17 @@ function ProfileSettings({ user, handleLogout, updateUser }) {
           onChange={(e) => setTheme(e.target.value)}
         >
           <SelectTheme />
-        </select>
-        <button type="submit" style={{ marginTop: 10 }}>
+        </select> */}
+        <button type="submit" style={{ 
+          
+          marginTop: 10,
+          background: "pink",
+          border: "none", 
+          fontFamily: 'Russo One', 
+          color: "white",
+          display: "block",
+          fontSize: 20, 
+            }}>
           Save Changes
         </button>
         {errors.map((err) => (
@@ -160,24 +179,25 @@ function ProfileSettings({ user, handleLogout, updateUser }) {
             {err}
           </h3>
         ))}
-      </form>
-      <button
+              <button
         onClick={areYouSure}
         style={{
-          backgroundColor: "transparent",
-          color: "red",
-          borderColor: "red",
-          width: "fit-content",
-          height: "fit-content",
-          fontSize: 36,
+          background: "coral",
+          border: "none", 
+          fontFamily: 'Russo One', 
+          color: "white",
+          display: "block",
           margin: "auto",
           marginTop: 20,
-          marginBottom: 20,
-          display: "block",
+          width: "fit-content",
+          height: "fit-content",
+          fontSize: 24,
         }}
       >
-        Delete User
+        Delete My Closet
       </button>
+      </form>
+
     </div>
   );
 }

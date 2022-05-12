@@ -31,7 +31,7 @@ function Header({ user, onLogout }) {
             alignItems: "center", 
             justifyContent: "center",
             lineHeight: .1,
-            width: "88%"
+            width: "95%"
             }}>
         <h1 style={{
             fontSize: "80px",
@@ -74,16 +74,16 @@ function Header({ user, onLogout }) {
           <Link className="nav" to={"profile"}>
             Profile
           </Link>
-          <Link className="nav" to={"friends"}>
+          <Link className="nav" user={user} to={"friends"}>
             Friends
           </Link>
-          <Link className="nav" to={"settings"}>
+          <Link className="nav" user={user} to={"settings"}>
             Profile Settings
           </Link>
-          <Link className="nav" to={"search"}>
+          <Link className="nav" user={user} to={"search"}>
             Search Users
           </Link>
-          <Link className="nav" to={"new-outfit-form"}>
+          <Link className="nav" user={user} to={"new-outfit-form"}>
             + Add a new fit!
           </Link>
 

@@ -35,7 +35,7 @@ function Login({ onLogin }) {
           >
             <p>
               Already have an account? &nbsp;
-              <button color="secondary" onClick={() => setShowLogin(true)}>
+              <button style={{ background: "pink", border: "none", fontFamily: 'Russo One', color: "white" }}color="secondary" onClick={() => setShowLogin(true)}>
                 Log In
               </button>
             </p>

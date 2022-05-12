@@ -16,17 +16,17 @@ import NewOutfitForm from "./NewOutfitForm";
 function App() {
   const [user, setUser] = useState("");
   const [users, setUsers] = useState([])
-  // const [outfits, setOutfits] = useState([])
+  const [outfits, setOutfits] = useState([])
   const [follows, setFollows] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredName, setFilteredName] = useState('')
   const [friend, setFriend] = useState({})
 
-//   useEffect(() => {
-//     fetch('/outfits')
-//     .then(res => res.json())
-//     .then(data => setOutfits(data))
-// }, [])
+  useEffect(() => {
+    fetch('/outfits')
+    .then(res => res.json())
+    .then(data => setOutfits(data))
+}, [])
 
 useEffect(() => {
   fetch('/users')
@@ -62,6 +62,14 @@ useEffect(() => {
     setUser("");
   }
 
+  function updateOutfits(updatedOutfit) {
+    const filtered = [...outfits].filter((outfit) => outfit.id !== updatedOutfit.id);
+    // const sorted = [...filtered, updatedOutfit].sort((a, b) => a.id - b.id);
+    setOutfits(filtered);
+}
+
+
+
   function updateUser(newName, newBio, newTheme, newUsername) {
     setUser({ ...user, username: newUsername, name: newName, bio: newBio, theme: newTheme });
   }
@@ -89,10 +97,9 @@ useEffect(() => {
           path="/profile"
           element={
             <Profile
-              user={user} />}
-              // outfits={outfits}/>}
+              user={user}/>}
         />
-        <Route exact path = "/new-outfit-form" element={<NewOutfitForm user={user}/>}/>
+        <Route exact path = "/new-outfit-form" element={<NewOutfitForm updateOutfits={updateOutfits} user={user}/>}/>
         <Route exact path="/settings" 
           element={
           <ProfileSettings 
@@ -101,14 +108,14 @@ useEffect(() => {
         <Route exact path="/friends" 
           element={
           <Friends user={user}/>}/>
-        <Route exact path="friend/:id" 
+        <Route exact path="friend/:username/:id" 
           element={
           <FriendProfile/>}/>
         <Route exact path="/search" 
           element={
           <Search filteredName={filteredName} follows={follows} user ={user} friend={friend} handleSearch={handleSearch}/>}/>
       </Routes>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
       </div>
   );
 }

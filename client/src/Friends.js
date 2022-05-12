@@ -6,9 +6,9 @@ import FriendProfile from "./FriendProfile";
 function Friends({user}) {
 
   const followers = user.followers
-  const mappedFollowers = followers.map(follower => <ul> {follower.username} <Link style={{color: "lightcoral"}} to={`/friend/${follower.id}`}>See Profile</Link></ul>)
+  const mappedFollowers = followers.map(follower => <ul> {follower.username} <Link style={{color: "lightcoral"}} to={`/friend/${follower.username}/${follower.id}`}>See Profile</Link></ul>)
   const followees = user.followees
-  const mappedFollowees = followees.map(followee => <ul>{followee.username} <Link style={{color: "lightcoral"}} to={`/friend/${followee.id}`}>See Profile</Link></ul>)
+  const mappedFollowees = followees.map(followee => <ul>{followee.username} <Link style={{color: "lightcoral"}} to={`/friend/${followee.username}/${followee.id}`}>See Profile</Link></ul>)
 
 
   return (

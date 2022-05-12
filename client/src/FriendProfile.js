@@ -7,9 +7,11 @@ function FriendProfile() {
     const [friendOutfits, setFriendOutfits] = useState([])
 
     let {id} = useParams();
+    let {username} = useParams();
+    console.log(username)
 
     useEffect(() => {
-        fetch(`/outfits/${id}`)
+        fetch(`/outfits/${username}/${id}`)
         .then(res => res.json())
         .then(data => setFriendOutfits(data))
     }, [])
@@ -18,10 +20,16 @@ function FriendProfile() {
     const mappedOutfits = friendOutfits.map((outfit)=> 
          <Outfit key={outfit.id} outfit={outfit}/>)
 
+         
   return (
-      <div>
+      <div style={{display: "flex", flexDirection:"column", alignItems: "center"}} className="container">
+          <h2 style={{fontSize: 30, }}>{username}'s Closet</h2>
+          <div style={{
+              width: "fit-content"
+          }}>
           {mappedOutfits}
-      </div>
+          </div>
+        </div>
   )
 }
 

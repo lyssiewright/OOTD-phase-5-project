@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
   
-  # post '/users/:id/follow', to: "users#follow", as: "follow_user"
-  # post '/users/:id/unfollow', to: "users#unfollow", as: "unfollow_user"
   get '/likes', to: 'likes#index'
   post '/likes', to: 'likes#create'
   post '/outfits', to: 'outfits#create'
   get '/outfits', to: 'outfits#index'
-  get '/outfits/:id', to: 'outfits#show'
+  get '/outfits/:username/:id', to: 'outfits#show'
   post "/login", to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get "/me", to: 'users#show'
@@ -18,6 +16,7 @@ Rails.application.routes.draw do
   get '/follows/:id', to: 'follows#show'
   post '/follows', to: 'follows#create'
   delete '/follows/:id', to: 'follows#destroy'
+  delete '/outfits/:id', to: 'outfits#destroy'
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!

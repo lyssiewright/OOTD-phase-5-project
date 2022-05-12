@@ -25,9 +25,23 @@ function Search({handleSearch, filteredName, user, friend}) {
             return <h3>Me!</h3>
         }
         else if (isFollow) {
-            return <button onClick={(() => unfollow())}>Unfollow</button>
+            return <button style={{
+                background: "none", 
+                borderColor: "pink", 
+                fontFamily: 'Russo One', 
+                color: "pink",
+                fontSize: 12
+            }} 
+                onClick={(() => unfollow())}>Unfollow</button>
         } else {
-            return <button onClick={(() => follow())}>Follow</button>
+            return <button style={{
+                background: "pink", 
+                borderColor: "white", 
+                fontFamily: 'Russo One', 
+                color: "white",
+                fontSize: 12
+            }} 
+            onClick={(() => follow())}>Follow</button>
         }
     }
 
@@ -59,17 +73,24 @@ function Search({handleSearch, filteredName, user, friend}) {
       }
 
     
-        
-        
-
-
-  
+    
 
 
 if (filteredName === ""){
   return (
-    <div>
-    <h3>Search Users</h3>
+    <div style={{
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "center",
+        width: "25%",
+        margin: "auto",
+        marginTop: 40,
+        boxShadow: "0.7em 1em 3em 0 pink", 
+        borderColor: "pink",
+        padding: 30,
+        height: "fit-content"
+    }}>
+    <h3 style={{fontSize: 40}}>Search Users</h3>
     <input type="text" id="userSearch"
         placeholder="Enter user's name"
         onChange={onChange} />
@@ -78,14 +99,27 @@ if (filteredName === ""){
   )}
   else {
   return (
-    <div>
-    <h3>Search Users</h3>
+    <div style={{
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "center",
+        width: "25%",
+        margin: "auto",
+        marginTop: 40,
+        boxShadow: "0.7em 1em 3em 0 pink", 
+        borderColor: "pink",
+        padding: 30,
+        height: "fit-content"
+    }}>
+    <h3 style={{fontSize: 40, marginTop: 15}}>Search Users</h3>
     <input type="text" id="userSearch"
         placeholder="Enter user's name"
         onChange={onChange} />
-    {/* <div>{filteredName} <button onClick={handleAddFriend}>{isFollow ? "Follow" : "Unfollow"}</button></div> */}
-    <div>{filteredName} 
-    {renderFollow()}</div>
+    <h3 style={{fontSize: 30, marginBottom: 0}}>Results</h3>
+    <div style={{display: "flex", alignItems: "center"}}>
+        <p style={{paddingRight: 10, fontSize:20}}>{filteredName}</p> 
+        {renderFollow()}
+    </div>
     </div>
   )}
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Navigate, useNavigate} from "react-router-dom"
 
 
-function NewOutfitForm({ user }) {
+function NewOutfitForm({ user, updateOutfits }) {
     const [outfitName, setOutfitName] = useState('')
     const [bottomImg, setBottomImg] = useState(null)
     const [topImg, setTopImg] = useState(null)
@@ -18,6 +18,8 @@ function NewOutfitForm({ user }) {
         fetch('/outfits', {
             method: 'POST',
             body: formData})
+            .then((r)=>r.json())
+            .then((data)=> updateOutfits(data))
 
         navigate("/profile")
         
@@ -26,7 +28,17 @@ function NewOutfitForm({ user }) {
 
   return ( 
     <div>
-        <form className="upload-clothes-form" onSubmit={handleSubmit}>
+        <form style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "40%",
+          margin: "auto",
+          lineHeight: 2,
+          boxShadow: "0.7em 1em 3em 0 pink", 
+          borderColor: "pink",
+          padding: 20,
+          marginTop: 20
+        }} className="upload-clothes-form" onSubmit={handleSubmit}>
             <label htmlFor="outfitName">Outfit Name</label>
             <input type="text" id="outfitName" value={outfitName} onChange={(e) => setOutfitName(e.target.value)}/>
             <input

@@ -2,9 +2,22 @@ import React, { useState } from "react";
 
 
 
-function Outfit({outfit}) {
+function Outfit({outfit, onDeleteOutfit}) {
 
+    const [errors, setErrors] = useState([]);
 
+    function handleDeleteClick(){
+        fetch(`/outfits/${outfit.id}`, {
+          method: "DELETE",
+        })
+        .then((r) => {
+            if (r.ok) {
+                r.json().then((outfit) => onDeleteOutfit(outfit))
+            } else {
+                r.json().then((err) => setErrors(err.errors))
+            }
+        })
+    }
 
     
   return (
@@ -25,6 +38,18 @@ function Outfit({outfit}) {
             width: "auto",
        }}
             src={outfit.bottom_img}/>
+        <button style={{
+            display: "block"
+            }}
+            onClick={handleDeleteClick}>🗑️</button>
+        {errors.map((err) => (
+        <h3
+          key={err}
+           style={{ display: "block", margin: "auto", marginTop: 10, background: "none", border: "none", fontFamily: 'Russo One', color: "pink" }}
+        >
+          {err}
+        </h3>
+      ))}
     </div>
   );
 }

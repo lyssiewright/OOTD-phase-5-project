@@ -60,7 +60,7 @@ code {
   width: 100%
 }
 
-input[type="text"]
+input[type="text"], input[type="password"]
 {
     background: transparent;
     border-style: dotted;
@@ -78,7 +78,6 @@ input[type=file]::file-selector-button
   border: none;
   font-family: 'Russo One';
   color: white;
-  /* line-height: 1.5; */;
 }
 
 input[type=file]::file-selector-button:hover {
@@ -146,5 +145,7 @@ input[type=file]::file-selector-button:hover {
   width: 30%;
   line-height: 3;
 }
+
+
 
 

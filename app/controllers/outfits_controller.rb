@@ -5,6 +5,7 @@ class OutfitsController < ApplicationController
     outfit = Outfit.create!(outfit_params)
     if outfit.valid?
       render json: outfit, status: :created
+      
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -20,6 +21,16 @@ end
     friend = User.find_by(id: params[:id])
     outfits = Outfit.select{|outfit| outfit.user.id == friend.id}
     render json: outfits
+  end
+
+  def destroy
+    user = User.find(session[:user_id])
+    outfit = Outfit.find_by(id: params[:id])
+    if outfit.user.id === user.id
+    outfit.destroy
+    head :no_content
+    else render json: { errors: ["You cannot remove friends' outfits"] }, status: :unauthorized
+    end
   end
 
 
