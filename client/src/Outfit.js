@@ -10,16 +10,11 @@ function Outfit({outfit, onDeleteOutfit}) {
         fetch(`/outfits/${outfit.id}`, {
           method: "DELETE",
         })
-        .then((data) => {
-            data.text().then(text => console.log(text))
-            // if (r.ok){
-            //     r.json().then((data) => console.log(data))}
-                // else {r.json().then((err) => console.log(err.errors))}
-            })}
-            // if (r.ok) {
-            //     r.json().then((outfit) => onDeleteOutfit(outfit))
-            // } else {
-            //     r.json().then((err) => setErrors(err.errors))}})}
+        .then((r) => {
+            if (r.ok) {
+                r.json().then((outfit) => onDeleteOutfit(outfit))
+            } else {
+                r.json().then((err) => setErrors(err.errors))}})}
 
     
   return (

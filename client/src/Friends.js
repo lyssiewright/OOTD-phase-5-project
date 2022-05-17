@@ -10,7 +10,7 @@ function Friends({user}) {
   const followees = user.followees
   const mappedFollowees = followees.map(followee => <ul>{followee.username} <Link style={{color: "lightcoral"}} to={`/friend/${followee.username}/${followee.id}`}>See Profile</Link></ul>)
 
-
+if (user.followers && user.followees){
   return (
       <div style={{
         display: "flex", 
@@ -29,7 +29,12 @@ function Friends({user}) {
       <h3 style={{fontSize:30}}>Following:</h3>
         {mappedFollowees}
       </div>
-  )
+  )}
+  else {
+    return (
+      <h2>Loading...</h2>
+    )
+  }
 }
 
 export default Friends;

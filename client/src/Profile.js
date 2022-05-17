@@ -23,21 +23,16 @@ function Profile() {
         .then(data => setOutfits(data))
     }, [])
 
-
-
     
-
-    
-
 
 
         const mappedOutfits = outfits.map((outfit)=> (
-        <Outfit key={outfit.id} outfit={outfit} />))
-// onDelete
-        // function onDeleteOutfit(deletedOutfit){
-        //     const updatedOutfits = mappedOutfits.filter((outfit)=>outfit.id !== deletedOutfit)
-        //     setOutfits(updatedOutfits)
-        // }
+        <Outfit key={outfit.id} outfit={outfit} onDeleteOutfit={onDeleteOutfit}/>))
+
+        function onDeleteOutfit(deletedOutfit){
+            const updatedOutfits = mappedOutfits.filter((outfit)=>outfit.id !== deletedOutfit)
+            setOutfits(updatedOutfits)
+        }
             
 
         function shuffleTop(e){

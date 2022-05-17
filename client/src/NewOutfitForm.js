@@ -20,6 +20,7 @@ function NewOutfitForm({ user, updateOutfits }) {
             body: formData})
             .then((r)=>r.json())
             .then((data)=> updateOutfits(data))
+
         navigate("/profile")
         
     }
