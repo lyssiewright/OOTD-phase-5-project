@@ -21,7 +21,7 @@ function Profile() {
         fetch('/outfits')
         .then(res => res.json())
         .then(data => setOutfits(data))
-    }, [outfits])
+    }, [])
 
     
 
