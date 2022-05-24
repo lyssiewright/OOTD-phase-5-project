@@ -3,12 +3,23 @@ import { useLinkClickHandler } from "react-router-dom";
 import { Link } from "react-router-dom";
 import FriendProfile from "./FriendProfile";
 
-function Friends({user}) {
+function Friends() {
+  const [user, setUser] = useState("");
 
-  const followers = user.followers
-  const mappedFollowers = followers.map(follower => <ul> {follower.username} <Link style={{color: "lightcoral"}} to={`/friend/${follower.username}/${follower.id}`}>See Profile</Link></ul>)
-  const followees = user.followees
-  const mappedFollowees = followees.map(followee => <ul>{followee.username} <Link style={{color: "lightcoral"}} to={`/friend/${followee.username}/${followee.id}`}>See Profile</Link></ul>)
+  useEffect(() => {
+      fetch("/me").then((r) => {
+        if (r.ok) {
+          r.json().then((user) => setUser(user));
+        }
+      });
+    }, []);
+
+
+  
+  // const followers = user.followers
+  // const mappedFollowers = followers.map(follower => <ul> {follower.username} <Link style={{color: "lightcoral"}} to={`/friend/${follower.username}/${follower.id}`}>See Profile</Link></ul>)
+  // const followees = user.followees
+  // const mappedFollowees = followees.map(followee => <ul>{followee.username} <Link style={{color: "lightcoral"}} to={`/friend/${followee.username}/${followee.id}`}>See Profile</Link></ul>)
 
 if (user.followers && user.followees){
   return (
@@ -25,9 +36,12 @@ if (user.followers && user.followees){
         boxShadow: "0.7em 1em 3em 0 pink",
         borderColor: "pink"}}>
       <h3 style={{fontSize:30}}>Followers:</h3>
-        {mappedFollowers}
+        {/* {mappedFollowers} */}
+        {user.followers.map(follower => <ul> {follower.username} <Link style={{color: "lightcoral"}} to={`/friend/${follower.username}/${follower.id}`}>See Profile</Link></ul>)}
+
       <h3 style={{fontSize:30}}>Following:</h3>
-        {mappedFollowees}
+        {/* {mappedFollowees} */}
+        {user.followees.map(followee => <ul>{followee.username} <Link style={{color: "lightcoral"}} to={`/friend/${followee.username}/${followee.id}`}>See Profile</Link></ul>)}
       </div>
   )}
   else {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Outfit from "./Outfit";
 
 
-function Profile() {
+function Profile({onDeleteOutfit}) {
     const [newTop, setNewTop] = useState('')
     const [newBottom, setNewBottom] = useState('')
     const [outfits, setOutfits] = useState([])
@@ -25,14 +25,14 @@ function Profile() {
 
     
 
-
-        const mappedOutfits = outfits.map((outfit)=> (
-        <Outfit key={outfit.id} outfit={outfit} onDeleteOutfit={onDeleteOutfit}/>))
-
         function onDeleteOutfit(deletedOutfit){
             const updatedOutfits = mappedOutfits.filter((outfit)=>outfit.id !== deletedOutfit)
             setOutfits(updatedOutfits)
         }
+
+
+        const mappedOutfits = outfits.map((outfit)=> (
+            <Outfit key={outfit.id} outfit={outfit} onDeleteOutfit={onDeleteOutfit}/>))
             
 
         function shuffleTop(e){

@@ -68,6 +68,12 @@ useEffect(() => {
 }
 
 
+  function onDeleteOutfit(deletedOutfit){
+      const updatedOutfits = outfits.filter((outfit)=>outfit.id !== deletedOutfit)
+      setOutfits(updatedOutfits)
+  }
+
+
 
   function updateUser(newName, newBio, newTheme, newUsername) {
     setUser({ ...user, username: newUsername, name: newName, bio: newBio, theme: newTheme });
@@ -95,8 +101,8 @@ useEffect(() => {
           exact
           path="/profile"
           element={
-            <Profile
-              user={user}/>}
+            <Profile onDeleteOutfit={onDeleteOutfit}
+              />}
         />
         <Route exact path = "/new-outfit-form" element={<NewOutfitForm updateOutfits={updateOutfits} user={user}/>}/>
         <Route exact path="/settings" 
@@ -106,7 +112,7 @@ useEffect(() => {
           updateUser={updateUser} />}/>
         <Route exact path="/friends" 
           element={
-          <Friends user={user}/>}/>
+          <Friends/>}/>
         <Route exact path="friend/:username/:id" 
           element={
           <FriendProfile/>}/>

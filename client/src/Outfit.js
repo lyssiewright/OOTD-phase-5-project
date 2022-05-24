@@ -9,13 +9,11 @@ function Outfit({outfit, onDeleteOutfit}) {
     function handleDeleteClick(){
         fetch(`/outfits/${outfit.id}`, {
           method: "DELETE",
-        })
-        .then((r) => {
+        }).then((r) => {
             if (r.ok) {
-                r.json().then((outfit) => onDeleteOutfit(outfit))
+                onDeleteOutfit(outfit)
             } else {
                 r.json().then((err) => setErrors(err.errors))}})}
-
     
   return (
     <div style={{

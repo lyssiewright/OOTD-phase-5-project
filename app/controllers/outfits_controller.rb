@@ -29,7 +29,7 @@ end
     if outfit.user.id === current_user.id
     outfit.destroy
     head :no_content
-    else render json: { errors: ["You cannot remove friends' outfits"] }, status: :unauthorized
+    else render json: { errors: ["You cannot remove friends' outfits"] }, status: 403
     end
   end
 
