@@ -26,7 +26,7 @@ function App() {
     fetch('/outfits')
     .then(res => res.json())
     .then(data => setOutfits(data))
-}, [outfits])
+}, [])
 
 useEffect(() => {
   fetch('/users')
@@ -67,17 +67,6 @@ useEffect(() => {
     setOutfits([...filteredArray]);
 }
 
-const mappedOutfits = outfits.map((outfit)=> (
-  <Outfit key={outfit.id} outfit={outfit} onDeleteOutfit={onDeleteOutfit}/>))
-
-function onDeleteOutfit(deletedOutfit){
-  const updatedOutfits = mappedOutfits.filter((outfit)=>outfit.id !== deletedOutfit)
-  setOutfits([...updatedOutfits])
-}
-
-
-
-
   function updateUser(newName, newBio, newTheme, newUsername) {
     setUser({ ...user, username: newUsername, name: newName, bio: newBio, theme: newTheme });
   }
@@ -105,7 +94,7 @@ function onDeleteOutfit(deletedOutfit){
           path="/profile"
           element={
             <Profile
-              user={user} outfits={mappedOutfits}/>}
+              user={user} />}
         />
         <Route exact path = "/new-outfit-form" element={<NewOutfitForm updateOutfits={updateOutfits} user={user}/>}/>
         <Route exact path="/settings" 
