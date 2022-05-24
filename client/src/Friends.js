@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLinkClickHandler } from "react-router-dom";
 import { Link } from "react-router-dom";
-import FriendProfile from "./FriendProfile";
 
 function Friends() {
   const [user, setUser] = useState("");

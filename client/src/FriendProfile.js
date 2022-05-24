@@ -14,13 +14,13 @@ function FriendProfile() {
         fetch(`/outfits/${username}/${id}`)
         .then(res => res.json())
         .then(data => setFriendOutfits(data))
-    }, [])
+    }, [username, id])
 
 
     const mappedOutfits = friendOutfits.map((outfit)=> 
          <Outfit key={outfit.id} outfit={outfit}/>)
 
-         
+
   return (
       <div style={{display: "flex", flexDirection:"column", alignItems: "center"}} className="container">
           <h2 style={{fontSize: 30, }}>{username}'s Closet</h2>

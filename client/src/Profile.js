@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Outfit from "./Outfit";
 
 
-function Profile({onDeleteOutfit}) {
+function Profile({outfits}) {
     const [newTop, setNewTop] = useState('')
     const [newBottom, setNewBottom] = useState('')
-    const [outfits, setOutfits] = useState([])
+    // const [outfits, setOutfits] = useState([])
     const [user, setUser] = useState("");
 
     useEffect(() => {
@@ -17,22 +17,23 @@ function Profile({onDeleteOutfit}) {
       }, []);
 
 
-    useEffect(() => {
-        fetch('/outfits')
-        .then(res => res.json())
-        .then(data => setOutfits(data))
-    }, [])
+      console.log(outfits)
+    // useEffect(() => {
+    //     fetch('/outfits')
+    //     .then(res => res.json())
+    //     .then(data => setOutfits(data))
+    // }, [])
 
     
 
-        function onDeleteOutfit(deletedOutfit){
-            const updatedOutfits = mappedOutfits.filter((outfit)=>outfit.id !== deletedOutfit)
-            setOutfits(updatedOutfits)
-        }
+        // function onDeleteOutfit(deletedOutfit){
+        //     const updatedOutfits = mappedOutfits.filter((outfit)=>outfit.id !== deletedOutfit)
+        //     setOutfits(updatedOutfits)
+        // }
 
 
-        const mappedOutfits = outfits.map((outfit)=> (
-            <Outfit key={outfit.id} outfit={outfit} onDeleteOutfit={onDeleteOutfit}/>))
+        // const mappedOutfits = outfits.map((outfit)=> (
+        //     <Outfit key={outfit.id} outfit={outfit} onDeleteOutfit={onDeleteOutfit}/>))
             
 
         function shuffleTop(e){
@@ -134,7 +135,7 @@ function Profile({onDeleteOutfit}) {
       {/* </form> */}
       </div>
       <div> 
-          {mappedOutfits}
+          {outfits}
       </div>
     </div>
   );}

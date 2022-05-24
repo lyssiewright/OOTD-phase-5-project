@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useResolvedPath } from "react-router-dom";
 import Login from "./Login";
 import Header from "./Header";
-import Footer from "./Footer";
 import Profile from "./Profile";
 import ProfileSettings from "./ProfileSettings";
 import Friends from "./Friends";
@@ -11,6 +10,7 @@ import Search from "./Search";
 import ReactPlayer from "react-player";
 import backgroundVideo from "./resources/ezgif-5-76bcba548c.mp4";
 import NewOutfitForm from "./NewOutfitForm";
+import Outfit from "./Outfit";
 
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
     fetch('/outfits')
     .then(res => res.json())
     .then(data => setOutfits(data))
-}, [])
+}, [outfits])
 
 useEffect(() => {
   fetch('/users')
@@ -63,15 +63,18 @@ useEffect(() => {
   }
 
   function updateOutfits(updatedOutfit) {
-    const filtered = [...outfits].filter((outfit) => outfit.id !== updatedOutfit.id);
-    setOutfits(filtered);
+    const filteredArray = [...outfits].filter((outfit) => outfit.id !== updatedOutfit.id);
+    setOutfits([...filteredArray]);
 }
 
+const mappedOutfits = outfits.map((outfit)=> (
+  <Outfit key={outfit.id} outfit={outfit} onDeleteOutfit={onDeleteOutfit}/>))
 
-  function onDeleteOutfit(deletedOutfit){
-      const updatedOutfits = outfits.filter((outfit)=>outfit.id !== deletedOutfit)
-      setOutfits(updatedOutfits)
-  }
+function onDeleteOutfit(deletedOutfit){
+  const updatedOutfits = mappedOutfits.filter((outfit)=>outfit.id !== deletedOutfit)
+  setOutfits([...updatedOutfits])
+}
+
 
 
 
@@ -101,8 +104,8 @@ useEffect(() => {
           exact
           path="/profile"
           element={
-            <Profile onDeleteOutfit={onDeleteOutfit}
-              />}
+            <Profile
+              user={user} outfits={mappedOutfits}/>}
         />
         <Route exact path = "/new-outfit-form" element={<NewOutfitForm updateOutfits={updateOutfits} user={user}/>}/>
         <Route exact path="/settings" 
@@ -112,13 +115,13 @@ useEffect(() => {
           updateUser={updateUser} />}/>
         <Route exact path="/friends" 
           element={
-          <Friends/>}/>
+          <Friends user={user}/>}/>
         <Route exact path="friend/:username/:id" 
           element={
           <FriendProfile/>}/>
         <Route exact path="/search" 
           element={
-          <Search filteredName={filteredName} follows={follows} user ={user} friend={friend} handleSearch={handleSearch}/>}/>
+          <Search filteredName={filteredName} user={user} friend={friend} handleSearch={handleSearch}/>}/>
       </Routes>
       {/* <Footer></Footer> */}
       </div>

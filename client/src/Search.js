@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useResolvedPath } from "react-router-dom";
 
 function Search({handleSearch, filteredName, user, friend}) {
     const [isFollow, setIsFollow] = useState(false)
@@ -13,8 +12,8 @@ function Search({handleSearch, filteredName, user, friend}) {
  
     useEffect(() => {
             const foundFollowee = follows.find(element => element.name.includes(filteredName));
-             if (foundFollowee === undefined){
-                 setIsFollow(false)
+             if (foundFollowee !== undefined){
+                 setIsFollow(true)
         }
     },[friend, user.followees])
 
